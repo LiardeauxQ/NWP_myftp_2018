@@ -1,0 +1,6 @@
+client
+myftp
+*.a
+*.o
+vgcore*
+
