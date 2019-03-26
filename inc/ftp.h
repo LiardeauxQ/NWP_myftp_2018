@@ -19,4 +19,9 @@
 
 #define LISTEN_BACKLOG 50
 
+#define EXIT_ERROR 84
+
+#define handle_error(msg) \
+	do { perror(msg); exit(EXIT_ERROR); } while (0)
+
 #endif /* FTP_H_ */
