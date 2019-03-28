@@ -20,6 +20,7 @@
 #define LISTEN_BACKLOG 50
 
 #define EXIT_ERROR 84
+#define MAX_CLIENT 30
 
 #define handle_error(msg) \
 	do { perror(msg); exit(EXIT_ERROR); } while (0)
