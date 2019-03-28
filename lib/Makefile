@@ -5,13 +5,16 @@
 ## Makefile
 ##
 
-SRCLIB	=	str_to_word_array.c
+SRCLIB	=	str_to_word_array.c	\
+			get_next_line.c	\
+			error.c	\
+			get_ip.c
 
 OBJLIB	=	$(SRCLIB:.c=.o)
 
 NAMELIB	=	libutils.a
 
-CFLAGS	=	-W
+CFLAGS	=	-W -I .
 
 $(NAMELIB):	$(OBJLIB)
 	@echo -e 'Flags: $(CFLAGS)'
