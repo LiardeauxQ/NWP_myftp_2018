@@ -9,7 +9,10 @@ INC	=	-I ../inc
 
 SRCDIR	= ./src/
 
-SRCS	=	main.c
+SRCS	=	main.c	\
+			main_socket.c	\
+			init_connection.c	\
+			client_sockets_management.c
 
 CFLAGS	=	-Wall -Wextra -g $(INC)
 

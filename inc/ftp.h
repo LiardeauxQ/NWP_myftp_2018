@@ -25,4 +25,19 @@
 #define handle_error(msg) \
 	do { perror(msg); exit(EXIT_ERROR); } while (0)
 
+/* main_socket.c */
+
+void check_main_socket_event(fd_set *readfds,
+        int (*client_sockets)[MAX_CLIENT], const int main_socket);
+
+/* init_connection.c */
+
+int init_socket_connection(const int port);
+int set_fds(fd_set *readfds, const int client_sockets[MAX_CLIENT],
+        const int sfd);
+
+/* client_socket_management.c */
+
+void check_sockets_event(fd_set *readfds, int (*client_sockets)[MAX_CLIENT]);
+
 #endif /* FTP_H_ */
