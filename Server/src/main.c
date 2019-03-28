@@ -7,26 +7,39 @@
 
 #include "ftp.h"
 
-int main(int __attribute__((unused)) ac, char **av)
+void server_loop(int (*client_sockets)[MAX_CLIENT],
+        const int control_socket,
+        const int port)
 {
-    int sfd = init_socket_connection(atoi(av[1]));
     int max_fd = 0;
-    int afd = 0;
-    int client_sockets[MAX_CLIENT];
+    int data_socket = 0;
     fd_set readfds;
 
+    while (1) {
+        max_fd = set_fds(&readfds, *client_sockets, control_socket);
+        if (select(max_fd + 1, &readfds, NULL, NULL, NULL) == -1)
+            handle_error("select");
+        check_main_socket_event(&readfds, client_sockets, control_socket);
+        check_sockets_event(&readfds, client_sockets);
+    }
+    close(data_socket);
+}
+
+int main(int ac, char **av)
+{
+    int control_socket = 0;
+    int client_sockets[MAX_CLIENT];
+    int port = 0;
+
+    if (ac <= 1)
+        return (84);
+    port = atoi(av[1]);
+    control_socket = init_socket(port);
     for (int i = 0 ; i < MAX_CLIENT ; i++)
         client_sockets[i] = 0;
-    if (listen(sfd, 50) == -1)
+    if (listen(control_socket, 50) == -1)
         handle_error("listen");
-    while (1) {
-        max_fd = set_fds(&readfds, client_sockets, sfd);
-        afd = select(max_fd + 1, &readfds, NULL, NULL, NULL);
-        if (afd == -1)
-            handle_error("select");
-        check_main_socket_event(&readfds, &client_sockets, sfd);
-        check_sockets_event(&readfds, &client_sockets);
-    }
-    close(sfd);
+    server_loop(&client_sockets, control_socket, port);
+    close(control_socket);
     return (0);
 }

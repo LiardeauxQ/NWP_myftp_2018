@@ -7,21 +7,21 @@
 
 #include "ftp.h"
 
-int init_socket_connection(const int port)
+int init_socket(const int port)
 {
     struct sockaddr_in sockaddr;
-    int sfd = socket(AF_INET, SOCK_STREAM, 0);
+    int fd = socket(AF_INET, SOCK_STREAM, 0);
 
-    memset(&sockaddr, 0, sizeof(struct sockaddr_in));
-    if (sfd == -1)
+    if (fd == -1)
         handle_error("socket");
+    memset(&sockaddr, 0, sizeof(struct sockaddr_in));
     sockaddr.sin_family = AF_INET;
     sockaddr.sin_port = htons(port);
     sockaddr.sin_addr.s_addr = htons(INADDR_ANY);
-    if (bind(sfd, (struct sockaddr *) &sockaddr,
+    if (bind(fd, (struct sockaddr *) &sockaddr,
                 sizeof(struct sockaddr_in)) == -1)
         handle_error("bind");
-    return (sfd);
+    return (fd);
 }
 
 int set_fds(fd_set *readfds, const int client_sockets[MAX_CLIENT],

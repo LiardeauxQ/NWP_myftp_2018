@@ -32,7 +32,7 @@ void check_main_socket_event(fd_set *readfds,
 
 /* init_connection.c */
 
-int init_socket_connection(const int port);
+int init_socket(const int port);
 int set_fds(fd_set *readfds, const int client_sockets[MAX_CLIENT],
         const int sfd);
 
