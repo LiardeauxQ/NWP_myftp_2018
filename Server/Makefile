@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-INC	=	-I ../inc
+INC	=	-I ../inc -I ./inc/
 
 SRCDIR	= ./src/
 

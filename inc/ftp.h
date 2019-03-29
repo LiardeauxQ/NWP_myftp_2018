@@ -37,8 +37,4 @@ int init_socket(const int port);
 int set_fds(fd_set *readfds, const int client_sockets[MAX_CLIENT],
         const int sfd);
 
-/* client_socket_management.c */
-
-void check_sockets_event(fd_set *readfds, int (*client_sockets)[MAX_CLIENT]);
-
 #endif /* FTP_H_ */

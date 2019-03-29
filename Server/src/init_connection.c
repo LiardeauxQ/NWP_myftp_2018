@@ -5,7 +5,7 @@
 ** init connection to server
 */
 
-#include "ftp.h"
+#include "server.h"
 
 int init_socket(const int port)
 {

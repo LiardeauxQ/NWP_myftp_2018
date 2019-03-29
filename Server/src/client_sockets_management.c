@@ -5,7 +5,7 @@
 ** manage clients socket
 */
 
-#include "ftp.h"
+#include "server.h"
 
 static void disconnect_client(const int client_socket)
 {
@@ -22,27 +22,28 @@ void handle_client_command(const char *client_cmd)
 {
     char **split_cmd = str_to_word_array(client_cmd, " \t");
 
+    //if (strcmp(split_cmd[0], "USER") == 0)
+    //if (strcmp(split_cmd[0], "PASS") == 0)
     //if (strcmp(split_cmd[0], "PASV") == 0)
     //if (strcmp(split_cmd[0], "RETR") == 0)
 }
 
-void check_sockets_event(fd_set *readfds, int (*client_sockets)[MAX_CLIENT])
+void check_sockets_event(fd_set *readfds,
+        int (*client_sockets)[MAX_CLIENT],
+        server_utils_t *utils)
 {
     int fd = 0;
     FILE *stream = NULL;
-    int size = 0;
     char *buffer = NULL;
 
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         fd = (*client_sockets)[i];
-        stream = fdopen(fd, "r");
         if (!FD_ISSET(fd, readfds))
             continue;
-        if ((size = getline(&buffer, NULL, stream)) <= 0) {
+        if ((buffer = get_next_line(fd)) == NULL) {
             disconnect_client(fd);
             (*client_sockets)[i] = 0;
         } else
-            write(fd, buffer, size);
-        fclose(stream);
+            write(fd, buffer, strlen(buffer));
     }
 }

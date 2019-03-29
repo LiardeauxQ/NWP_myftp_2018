@@ -5,7 +5,7 @@
 ** main socket management
 */
 
-#include "ftp.h"
+#include "server.h"
 
 void check_main_socket_event(fd_set *readfds,
         int (*client_sockets)[MAX_CLIENT], const int main_socket)
