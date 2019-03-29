@@ -22,10 +22,15 @@ void handle_client_command(const char *client_cmd)
 {
     char **split_cmd = str_to_word_array(client_cmd, " \t");
 
-    //if (strcmp(split_cmd[0], "USER") == 0)
-    //if (strcmp(split_cmd[0], "PASS") == 0)
-    //if (strcmp(split_cmd[0], "PASV") == 0)
-    //if (strcmp(split_cmd[0], "RETR") == 0)
+    if (strcmp(split_cmd[0], "USER") == 0) {
+    }
+    if (strcmp(split_cmd[0], "PASS") == 0) {
+    }
+    if (strcmp(split_cmd[0], "PASV") == 0) {
+    }
+    if (strcmp(split_cmd[0], "RETR") == 0) {
+    }
+    free_2d_char_array(split_cmd);
 }
 
 void check_sockets_event(fd_set *readfds,
@@ -33,7 +38,6 @@ void check_sockets_event(fd_set *readfds,
         server_utils_t *utils)
 {
     int fd = 0;
-    FILE *stream = NULL;
     char *buffer = NULL;
 
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
@@ -45,5 +49,6 @@ void check_sockets_event(fd_set *readfds,
             (*client_sockets)[i] = 0;
         } else
             write(fd, buffer, strlen(buffer));
+        free(buffer);
     }
 }
