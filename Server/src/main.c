@@ -16,7 +16,6 @@ void server_loop(int (*client_sockets)[MAX_CLIENT], server_utils_t *utils)
         max_fd = set_fds(&readfds, *client_sockets, utils->control.socket);
         if (select(max_fd + 1, &readfds, NULL, NULL, NULL) == -1)
             handle_error("select");
-        printf("test event\n");
         check_main_socket_event(&readfds, client_sockets,
                 utils->control.socket);
         check_sockets_event(&readfds, client_sockets, utils);

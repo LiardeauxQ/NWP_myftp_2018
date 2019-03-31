@@ -7,7 +7,7 @@
 
 LIBUTILSDIR	=	../lib/utils/
 
-INC	=	-I ../inc -I ./inc/ -I $(LIBUTILSDIR)
+INC	=	-I $(LIBUTILSDIR) -I ../inc -I ./inc/ 
 
 SRCDIR	= ./src/
 
@@ -15,6 +15,8 @@ SRCS	=	main.c	\
 			main_socket.c	\
 			init_connection.c	\
 			data_socket.c	\
+			commands.c	\
+			commands/pasv.c	\
 			client_sockets_management.c
 
 CFLAGS	=	-Wall -Wextra -g $(INC)

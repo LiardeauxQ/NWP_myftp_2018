@@ -18,21 +18,17 @@ static void disconnect_client(const int client_socket)
     close(client_socket);
 }
 
-void handle_client_command(const char *client_cmd,
+void handle_client_command(char *client_cmd,
         server_utils_t *utils, const int fd)
 {
-    char **split_cmd = str_to_word_array(client_cmd, " \t");
+    char **split_cmd = str_to_word_array(clean_str(client_cmd), ".");
 
-    if (strcmp(split_cmd[0], "USER") == 0) {
-    }
-    if (strcmp(split_cmd[0], "PASS") == 0) {
-    }
-    if (strcmp(split_cmd[0], "PASV") == 0) {
-        utils->data = init_data_socket();
-        printf("Passive mode\n");
-        successful_data_socket_connection(&utils->data, fd);
-    }
-    if (strcmp(split_cmd[0], "RETR") == 0) {
+    for (int i = 0 ; cmd[i].name != NULL ; i++) {
+        if (!strcmp(split_cmd[0], cmd[i].name)) {
+            if (cmd[i].action != NULL)
+                cmd[i].action(utils, client_cmd, fd);
+            break;
+        }
     }
     free_2d_char_array(split_cmd);
 }
@@ -51,11 +47,8 @@ void check_sockets_event(fd_set *readfds,
         if ((buffer = get_next_line(fd)) == NULL) {
             disconnect_client(fd);
             (*client_sockets)[i] = 0;
-        } else {
-            printf("%s\n", buffer);
+        } else
             handle_client_command(buffer, utils, fd);
-            //write(fd, buffer, strlen(buffer));
-        }
         free(buffer);
     }
 }

@@ -32,6 +32,7 @@
 typedef struct socket_info_s {
     int socket;
     int port;
+    ip_address_t ip;
     struct sockaddr_in sockaddr;
 } sockinfo_t;
 

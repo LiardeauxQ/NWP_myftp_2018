@@ -12,5 +12,5 @@ size_t count_2d_array(char **array)
     size_t size = 0;
 
     while (array[size++] != NULL);
-    return (size);
+    return (size - 1);
 }

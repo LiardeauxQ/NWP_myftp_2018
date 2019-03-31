@@ -10,6 +10,7 @@ SRCLIB	=	str_to_word_array.c	\
 			get_next_line.c	\
 			error.c	\
 			free_memory.c	\
+			clean_str.c	\
 			get_ip.c
 
 OBJLIB	=	$(SRCLIB:.c=.o)

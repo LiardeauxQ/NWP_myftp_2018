@@ -49,4 +49,8 @@ ip_address_t get_ip_address(void);
 
 char *get_next_line(int fd);
 
+/* clean_str.c */
+
+char *clean_str(char *clean_str);
+
 #endif /* UTILS_H_ */

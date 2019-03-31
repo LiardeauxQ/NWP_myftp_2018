@@ -9,12 +9,8 @@
 #	define SERVER_H_
 
 #include "ftp.h"
-#include "utils.h"
-
-typedef struct server_utils_s {
-    sockinfo_t control;
-    sockinfo_t data;
-} server_utils_t;
+#include "server_utils.h"
+#include "commands.h"
 
 /* client_socket_management.c */
 
@@ -25,5 +21,6 @@ void check_sockets_event(fd_set *readfds,
 /* data_socket.h */
 
 sockinfo_t init_data_socket(void);
+void successful_data_socket_connection(const sockinfo_t *data, const int fd);
 
-#endif
+#endif /* SERVER_H_ */

@@ -5,13 +5,17 @@
 ## Makefile
 ##
 
-INC	=	-I ../inc
+LIBUTILSDIR	=	../lib/utils/
+
+INC	=	-I $(LIBUTILSDIR) -I ../inc -I ./inc/ 
 
 SRCDIR	= ./src/
 
 SRCS	=	main.c
 
 CFLAGS	=	-Wall -Wextra -g $(INC)
+
+LDFLAGS	=	-lutils -L $(LIBUTILSDIR)
 
 PREFIX_SRCS	= $(addprefix $(SRCDIR), $(SRCS))
 
@@ -22,6 +26,7 @@ NAME		=	client
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
+	@make --no-print-directory -C $(LIBUTILSDIR)
 	@printf 'FLAGS: $(LDFLAGS) $(CFLAGS)\n'
 	@printf 'Create: ./$(NAME)\n'
 	@$(CC) -o $(NAME) $^ $(CFLAGS) $(LDFLAGS)
@@ -31,10 +36,12 @@ $(NAME):	$(OBJS)
 	@$(CC) -o $@ -c $< $(LDFLAGS) $(CFLAGS)
 
 clean:
+	@make clean --no-print-directory -C $(LIBUTILSDIR)
 	@rm -f $(OBJS)
 	@printf 'Clean : OK\n'
 
 fclean: clean
+	@make fclean --no-print-directory -C $(LIBUTILSDIR)
 	@rm -f $(NAME)
 	@printf 'Fclean: ./$(NAME)\n'
 

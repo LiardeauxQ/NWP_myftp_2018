@@ -24,6 +24,7 @@ sockinfo_t init_socket(const int port)
         info.socket = -1;
         return (info);
     }
+    info.ip = get_ip_address();
     return (info);
 }
 
