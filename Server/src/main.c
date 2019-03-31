@@ -31,9 +31,9 @@ int main(int ac, char **av)
 
     if (ac <= 1)
         return (84);
-    printf("%s\n", get_ip_address());
     utils.port = atoi(av[1]);
     utils.control_socket = init_socket(utils.port);
+    utils.ip = get_ip_address();
     for (int i = 0 ; i < MAX_CLIENT ; i++)
         client_sockets[i] = 0;
     if (listen(utils.control_socket, 50) == -1)

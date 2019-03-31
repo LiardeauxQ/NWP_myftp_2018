@@ -9,11 +9,13 @@
 #	define SERVER_H_
 
 #include "ftp.h"
+#include "utils.h"
 
 typedef struct server_utils_s {
     int control_socket;
     int data_socket;
     int port;
+    ip_address_t ip;
 } server_utils_t;
 
 /* client_socket_management.c */
