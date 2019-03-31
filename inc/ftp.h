@@ -23,8 +23,17 @@
 #define EXIT_ERROR 84
 #define MAX_CLIENT 30
 
+#define MAX_PORT 5000
+#define DEFAULT_PORT 1024
+
 #define handle_error(msg) \
 	do { perror(msg); exit(EXIT_ERROR); } while (0)
+
+typedef struct socket_info_s {
+    int socket;
+    int port;
+    struct sockaddr_in sockaddr;
+} sockinfo_t;
 
 /* main_socket.c */
 
@@ -33,7 +42,7 @@ void check_main_socket_event(fd_set *readfds,
 
 /* init_connection.c */
 
-int init_socket(const int port);
+sockinfo_t init_socket(const int port);
 int set_fds(fd_set *readfds, const int client_sockets[MAX_CLIENT],
         const int sfd);
 

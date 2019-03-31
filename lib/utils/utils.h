@@ -32,6 +32,10 @@ void check_malloc(void *value);
 
 char **str_to_word_array(char const *str, char *s);
 
+/* count_2d_array.c */
+
+size_t count_2d_array(char **array);
+
 /* free_memory.c */
 
 void free_2d_int_array(int **array);

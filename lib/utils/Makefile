@@ -6,6 +6,7 @@
 ##
 
 SRCLIB	=	str_to_word_array.c	\
+			count_2d_array.c	\
 			get_next_line.c	\
 			error.c	\
 			free_memory.c	\

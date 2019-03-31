@@ -12,10 +12,8 @@
 #include "utils.h"
 
 typedef struct server_utils_s {
-    int control_socket;
-    int data_socket;
-    int port;
-    ip_address_t ip;
+    sockinfo_t control;
+    sockinfo_t data;
 } server_utils_t;
 
 /* client_socket_management.c */
@@ -23,5 +21,9 @@ typedef struct server_utils_s {
 void check_sockets_event(fd_set *readfds,
 		         int (*client_sockets)[MAX_CLIENT],
 			 server_utils_t *utils);
+
+/* data_socket.h */
+
+sockinfo_t init_data_socket(void);
 
 #endif

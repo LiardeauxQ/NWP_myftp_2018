@@ -14,6 +14,7 @@ SRCDIR	= ./src/
 SRCS	=	main.c	\
 			main_socket.c	\
 			init_connection.c	\
+			data_socket.c	\
 			client_sockets_management.c
 
 CFLAGS	=	-Wall -Wextra -g $(INC)
