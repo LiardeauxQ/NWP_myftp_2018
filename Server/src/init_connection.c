@@ -28,7 +28,7 @@ sockinfo_t init_socket(const int port)
     return (info);
 }
 
-int set_fds(fd_set *readfds, const int client_sockets[MAX_CLIENT],
+int set_fds(fd_set *readfds, const client_sks_t clients[MAX_CLIENT],
         const int sfd)
 {
     int fd = 0;
@@ -38,7 +38,7 @@ int set_fds(fd_set *readfds, const int client_sockets[MAX_CLIENT],
     FD_SET(sfd, readfds);
     max_fd = sfd;
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
-        fd = client_sockets[i];
+        fd = clients[i].control;
         if (fd > 0)
             FD_SET(fd, readfds);
         if (fd > max_fd)

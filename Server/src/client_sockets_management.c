@@ -34,19 +34,19 @@ void handle_client_command(char *client_cmd,
 }
 
 void check_sockets_event(fd_set *readfds,
-        int (*client_sockets)[MAX_CLIENT],
+        client_sks_t (*clients)[MAX_CLIENT],
         server_utils_t *utils)
 {
     int fd = 0;
     char *buffer = NULL;
 
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
-        fd = (*client_sockets)[i];
+        fd = (*clients)[i].control;
         if (!FD_ISSET(fd, readfds))
             continue;
         if ((buffer = get_next_line(fd)) == NULL) {
             disconnect_client(fd);
-            (*client_sockets)[i] = 0;
+            (*clients)[i] = (client_sks_t){0, 0};
         } else
             handle_client_command(buffer, utils, fd);
         free(buffer);

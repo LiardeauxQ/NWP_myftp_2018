@@ -36,15 +36,20 @@ typedef struct socket_info_s {
     struct sockaddr_in sockaddr;
 } sockinfo_t;
 
+typedef struct client_sockets_s {
+    int control;
+    int data;
+} client_sks_t;
+
 /* main_socket.c */
 
 void check_main_socket_event(fd_set *readfds,
-        int (*client_sockets)[MAX_CLIENT], const int main_socket);
+        client_sks_t (*clients)[MAX_CLIENT], const int main_socket);
 
 /* init_connection.c */
 
 sockinfo_t init_socket(const int port);
-int set_fds(fd_set *readfds, const int client_sockets[MAX_CLIENT],
+int set_fds(fd_set *readfds, const client_sks_t clients[MAX_CLIENT],
         const int sfd);
 
 #endif /* FTP_H_ */
