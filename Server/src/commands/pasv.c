@@ -8,10 +8,11 @@
 #include "server.h"
 
 void pasv_action(server_utils_t *utils, char *param,
-        client_sks_t *client_info, int fd)
+        client_sks_t *client_info)
 {
     sockinfo_t data = init_data_socket();
 
     client_info->data = data.socket;
-    send_client_pasv_message(&data, fd, "Entering Passive Mode", 227);
+    send_client_pasv_message(&data, client_info->control,
+            "Entering Passive Mode", 227);
 }

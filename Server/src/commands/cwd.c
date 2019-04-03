@@ -28,25 +28,25 @@ char *create_new_dir(const char *home, const char *str)
 }
 
 void cwd_action(server_utils_t *utils, char *param,
-        client_sks_t __attribute__((unused)) *client_info, int fd)
+        client_sks_t __attribute__((unused)) *client_info)
 {
     char **params = str_to_word_array(param, " \t");
     char *new_dir = NULL;
 
     if (count_2d_array(params) != 2) {
-        send_client_message(fd, "ERROR", 666);
+        send_client_message(client_info->control, "ERROR", 666);
         return;
     }
     new_dir = create_new_dir(utils->pwd, params[1]);
     if (new_dir == NULL)
         return;
     if (chdir(new_dir)) { 
-        send_client_message(fd, "Invalid new directory", 666);
+        send_client_message(client_info->control, "Invalid new dir", 666);
         return;
     }
     free(utils->pwd);
     utils->pwd = getcwd(NULL, 0);
     free_2d_char_array(params);
     free(new_dir);
-    send_client_message(fd, "Change working directory", 200);
+    send_client_message(client_info->control, "Change working directory", 200);
 }

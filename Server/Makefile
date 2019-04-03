@@ -18,11 +18,20 @@ SRCS	=	main.c	\
 			data_socket.c	\
 			commands.c	\
 			client_msg.c	\
-			commands/pasv.c	\
-			commands/cwd.c	\
-			commands/pwd.c	\
 			commands/user.c	\
 			commands/pass.c	\
+			commands/cwd.c	\
+			commands/cdup.c	\
+			commands/quit.c	\
+			commands/dele.c	\
+			commands/pwd.c	\
+			commands/pasv.c	\
+			commands/port.c	\
+			commands/help.c	\
+			commands/noop.c	\
+			commands/retr.c	\
+			commands/stor.c	\
+			commands/list.c	\
 			client_sockets_management.c
 
 CFLAGS	=	-Wall -Wextra -g $(INC)

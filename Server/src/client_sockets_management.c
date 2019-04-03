@@ -20,8 +20,7 @@ static void disconnect_client(const int client_socket)
 
 void handle_client_command(char *client_cmd,
         server_utils_t *utils,
-        client_sks_t *client_info,
-        const int fd)
+        client_sks_t *client_info)
 {
     char **split_cmd = str_to_word_array(clean_str(client_cmd), " \t");
 
@@ -30,7 +29,7 @@ void handle_client_command(char *client_cmd,
     for (int i = 0 ; cmd[i].name != NULL ; i++) {
         if (!strcmp(split_cmd[0], cmd[i].name)) {
             if (cmd[i].action != NULL)
-                cmd[i].action(utils, client_cmd, client_info, fd);
+                cmd[i].action(utils, client_cmd, client_info);
             break;
         }
     }
@@ -52,7 +51,7 @@ void check_sockets_event(fd_set *readfds,
             disconnect_client(fd);
             (*clients)[i] = (client_sks_t){0, 0};
         } else
-            handle_client_command(buffer, utils, clients[i], fd);
+            handle_client_command(buffer, utils, clients[i]);
         free(buffer);
     }
 }
