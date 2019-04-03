@@ -7,6 +7,35 @@
 
 #include "server.h"
 
+static void bind_socket(sockinfo_t *info, const int port)
+{
+    info->sockaddr.sin_family = AF_INET;
+    info->sockaddr.sin_port = htons(port);
+    info->sockaddr.sin_addr.s_addr = htons(INADDR_ANY);
+    if (bind(info->socket, (struct sockaddr *) &info->sockaddr,
+             sizeof(struct sockaddr_in)) == -1) {
+        info->socket = -1;
+        return;
+    }
+    info->ip = get_ip_address();
+}
+
+sockinfo_t init_master_socket(const int port)
+{
+    sockinfo_t info = {0};
+    int option = 1;
+
+    memset(&info, 0, sizeof(sockinfo_t));
+    info.socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (info.socket == -1)
+        return (info);
+    setsockopt(info.socket, SOL_SOCKET, SO_REUSEADDR,
+            &option, sizeof(option));
+    bind_socket(&info, port);
+    info.port = port;
+    return (info);
+}
+
 sockinfo_t init_socket(const int port)
 {
     sockinfo_t info = {0};
@@ -15,16 +44,8 @@ sockinfo_t init_socket(const int port)
     info.socket = socket(AF_INET, SOCK_STREAM, 0);
     if (info.socket == -1)
         return (info);
+    bind_socket(&info, port);
     info.port = port;
-    info.sockaddr.sin_family = AF_INET;
-    info.sockaddr.sin_port = htons(port);
-    info.sockaddr.sin_addr.s_addr = htons(INADDR_ANY);
-    if (bind(info.socket, (struct sockaddr *) &info.sockaddr,
-             sizeof(struct sockaddr_in)) == -1) {
-        info.socket = -1;
-        return (info);
-    }
-    info.ip = get_ip_address();
     return (info);
 }
 

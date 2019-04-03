@@ -9,6 +9,8 @@
 #	define SERVER_UTILS_H_
 
 typedef struct server_utils_s {
+    char *home;
+    char *pwd;
     sockinfo_t control;
     sockinfo_t data;
 } server_utils_t;

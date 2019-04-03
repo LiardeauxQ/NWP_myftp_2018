@@ -28,16 +28,16 @@ int main(int ac, char **av)
     server_utils_t utils = {0};
     client_sks_t clients[MAX_CLIENT] = {0};
 
-    if (ac <= 1)
+    if (ac <= 2)
         return (84);
-    utils.control = init_socket(atoi(av[1]));
+    utils.control = init_master_socket(atoi(av[1]));
+    utils.home = create_new_dir(getenv("PWD"), av[2]);
+    utils.pwd = strdup(utils.home);
     if (utils.control.socket == -1)
         handle_error("control socket initialization");
-    for (int i = 0 ; i < MAX_CLIENT ; i++)
-        printf("%d %d\n", clients[i].control, clients[i].data);
     if (listen(utils.control.socket, 50) == -1)
         handle_error("listen");
     server_loop(&clients, &utils);
-    close(utils.control.socket);
+    close_server_connection(&utils);
     return (0);
 }

@@ -9,13 +9,13 @@
 
 const struct cmd_info_s cmd[] =
 {
-    {"USER", NULL},
-    {"PASS", NULL},
-    {"CWD", NULL},
+    {"USER", &user_action},
+    {"PASS", &pass_action},
+    {"CWD", &cwd_action},
     {"CDUP", NULL},
     {"QUIT", NULL},
     {"DELE", NULL},
-    {"PWD", NULL},
+    {"PWD", &pwd_action},
     {"PASV", &pasv_action},
     {"PORT", NULL},
     {"HELP", NULL},

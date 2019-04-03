@@ -21,14 +21,3 @@ sockinfo_t init_data_socket(void)
         handle_error("data socket error");
     return (data);
 }
-
-void successful_data_socket_connection(const sockinfo_t *data, const int fd)
-{
-    int p[2] = {0};
-
-    p[0] = data->port / 256;
-    p[1] = data->port % 256;
-    dprintf(fd, "227 Entering Passive Mode (%d, %d, %d, %d, %d, %d)\n",
-            data->ip.octet_1, data->ip.octet_2, data->ip.octet_3,
-            data->ip.octet_4, p[0], p[1]);
-}

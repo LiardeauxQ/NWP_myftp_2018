@@ -13,5 +13,5 @@ void pasv_action(server_utils_t *utils, char *param,
     sockinfo_t data = init_data_socket();
 
     client_info->data = data.socket;
-    successful_data_socket_connection(&data, fd);
+    send_client_pasv_message(&data, fd, "Entering Passive Mode", 227);
 }

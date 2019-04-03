@@ -23,8 +23,10 @@ void handle_client_command(char *client_cmd,
         client_sks_t *client_info,
         const int fd)
 {
-    char **split_cmd = str_to_word_array(clean_str(client_cmd), ".");
+    char **split_cmd = str_to_word_array(clean_str(client_cmd), " \t");
 
+    if (split_cmd == NULL)
+        return;
     for (int i = 0 ; cmd[i].name != NULL ; i++) {
         if (!strcmp(split_cmd[0], cmd[i].name)) {
             if (cmd[i].action != NULL)
