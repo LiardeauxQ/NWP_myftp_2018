@@ -23,5 +23,6 @@ const struct cmd_info_s cmd[] =
     {"RETR", &retr_action},
     {"STOR", &stor_action},
     {"LIST", &list_action},
+    {"SYST", &syst_action},
     {NULL, NULL}
 };

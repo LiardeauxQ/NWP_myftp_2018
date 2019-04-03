@@ -32,6 +32,7 @@ SRCS	=	main.c	\
 			commands/retr.c	\
 			commands/stor.c	\
 			commands/list.c	\
+			commands/syst.c	\
 			client_sockets_management.c
 
 CFLAGS	=	-Wall -Wextra -g $(INC)

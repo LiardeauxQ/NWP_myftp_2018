@@ -20,19 +20,26 @@ static void disconnect_client(const int client_socket)
 
 void handle_client_command(char *client_cmd,
         server_utils_t *utils,
-        client_sks_t *client_info)
+        client_sks_t *client)
 {
     char **split_cmd = str_to_word_array(clean_str(client_cmd), " \t");
+    int found = 0;
 
     if (split_cmd == NULL)
         return;
+    printf("%s\n", client_cmd);
+    fflush(stdout);
     for (int i = 0 ; cmd[i].name != NULL ; i++) {
         if (!strcmp(split_cmd[0], cmd[i].name)) {
-            if (cmd[i].action != NULL)
-                cmd[i].action(utils, client_cmd, client_info);
+            if (cmd[i].action != NULL) {
+                cmd[i].action(utils, client_cmd, client);
+                found = 1;
+            }
             break;
         }
     }
+    if (!found)
+        send_client_message(client->control, "Command not found.", 666);
     free_2d_char_array(split_cmd);
 }
 
