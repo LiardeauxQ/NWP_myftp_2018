@@ -22,13 +22,4 @@ void pasv_action(server_utils_t *utils, char __attribute__((unused)) *param,
             ip->octet_4, p[0], p[1]);
     client->data = accept(utils->data.socket, (struct sockaddr *) &acceptaddr,
             &addrlen);
-    //client->pid = fork();
-    /*if (client->pid == 0) {
-        printf("0 pid\n");
-        dprintf(client->data, "LS data\n");
-        dprintf(client->control, "LS control\n");
-        close(client->data);
-    }*/
-    //printf("it's okai, %d\n", client->pid);
-    //close(utils->data.socket);
 }

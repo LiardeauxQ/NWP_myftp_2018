@@ -10,9 +10,7 @@
 void quit_action(server_utils_t *utils, char *param,
         client_sks_t *client)
 {
-    send_client_message(client->control,
-            "Service closing control connection.", 221);
-    //close(client->data);
+    send_client_message(client->control, 221);
     close(client->control);
     *client = (client_sks_t){0, 0, 0};
 }

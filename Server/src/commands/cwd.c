@@ -34,19 +34,19 @@ void cwd_action(server_utils_t *utils, char *param,
     char *new_dir = NULL;
 
     if (count_2d_array(params) != 2) {
-        send_client_message(client->control, "ERROR", 666);
+        send_client_message(client->control, 666);
         return;
     }
     new_dir = create_new_dir(utils->pwd, params[1]);
     if (new_dir == NULL)
         return;
     if (chdir(new_dir)) { 
-        send_client_message(client->control, "Invalid new dir", 666);
+        send_client_message(client->control, 666);
         return;
     }
     free(utils->pwd);
     utils->pwd = getcwd(NULL, 0);
     free_2d_char_array(params);
     free(new_dir);
-    send_client_message(client->control, "Change working directory", 200);
+    send_client_message(client->control, 200);
 }

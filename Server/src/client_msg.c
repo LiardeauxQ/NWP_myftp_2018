@@ -7,7 +7,12 @@
 
 #include "server.h"
 
-void send_client_message(const int fd, const char *msg, const int code)
+void send_client_message(const int fd, const int code)
 {
-    dprintf(fd, "%d %s\n", code, msg);
+    for (int i = 0 ; codes[i].msg != NULL ; i++) {
+        if (codes[i].msg == code) {
+            dprintf(fd, "%d %s\n", code, codes[i].msg);
+            break;
+        }
+    }
 }

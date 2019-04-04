@@ -39,7 +39,7 @@ void handle_client_command(char *client_cmd,
         }
     }
     if (!found)
-        send_client_message(client->control, "Command not found.", 666);
+        send_client_message(client->control, 665);
     free_2d_char_array(split_cmd);
 }
 

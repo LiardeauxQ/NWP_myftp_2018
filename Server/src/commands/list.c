@@ -13,8 +13,7 @@ void list_action(server_utils_t *utils, char *param,
     int pid = 0;
     char **split_cmd = NULL;
 
-    send_client_message(client->control,
-            "File status okay; about to open data connection.", 150);
+    send_client_message(client->control, 150);
     if ((pid = fork()) == 0) {
         split_cmd = str_to_word_array(param, " \t");
         free(split_cmd[0]);
@@ -23,5 +22,5 @@ void list_action(server_utils_t *utils, char *param,
         execvp(split_cmd[0], split_cmd);
     }
     close(client->data);
-    send_client_message(client->control, "Closing data connection.", 226);
+    send_client_message(client->control, 226);
 }

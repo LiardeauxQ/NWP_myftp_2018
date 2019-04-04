@@ -16,6 +16,7 @@ SRCS	=	main.c	\
 			init_connection.c	\
 			close_connection.c	\
 			data_socket.c	\
+			reply_codes.c	\
 			commands.c	\
 			client_msg.c	\
 			commands/user.c	\

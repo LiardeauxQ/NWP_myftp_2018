@@ -11,5 +11,5 @@ void syst_action(server_utils_t __attribute__((unused)) *utils,
         char __attribute__((unused)) *param,
         client_sks_t *client)
 {
-    send_client_message(client->control, "UNIX", 215);
+    send_client_message(client->control, 215);
 }
