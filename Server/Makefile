@@ -35,7 +35,7 @@ SRCS	=	main.c	\
 			commands/syst.c	\
 			client_sockets_management.c
 
-CFLAGS	=	-Wall -Wextra -g $(INC)
+CFLAGS	=	-Wall -g $(INC)
 
 LDFLAGS	=	-lutils -L $(LIBUTILSDIR)
 

@@ -12,6 +12,7 @@ static void bind_socket(sockinfo_t *info, const int port)
     info->sockaddr.sin_family = AF_INET;
     info->sockaddr.sin_port = htons(port);
     info->sockaddr.sin_addr.s_addr = htons(INADDR_ANY);
+    printf("Connection from %s\n", inet_ntoa(info->sockaddr.sin_addr));
     if (bind(info->socket, (struct sockaddr *) &info->sockaddr,
              sizeof(struct sockaddr_in)) == -1) {
         info->socket = -1;
@@ -33,6 +34,7 @@ sockinfo_t init_master_socket(const int port)
             &option, sizeof(option));
     bind_socket(&info, port);
     info.port = port;
+    info.ip = get_ip_address();
     return (info);
 }
 

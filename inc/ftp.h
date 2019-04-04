@@ -39,6 +39,7 @@ typedef struct socket_info_s {
 typedef struct client_sockets_s {
     int control;
     int data;
+    int pid;
 } client_sks_t;
 
 /* main_socket.c */

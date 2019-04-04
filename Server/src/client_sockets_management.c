@@ -56,7 +56,7 @@ void check_sockets_event(fd_set *readfds,
             continue;
         if ((buffer = get_next_line(fd)) == NULL) {
             disconnect_client(fd);
-            (*clients)[i] = (client_sks_t){0, 0};
+            (*clients)[i] = (client_sks_t){0, 0, 0};
         } else
             handle_client_command(buffer, utils, clients[i]);
         free(buffer);
