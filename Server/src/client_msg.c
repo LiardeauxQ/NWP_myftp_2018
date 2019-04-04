@@ -10,7 +10,7 @@
 void send_client_message(const int fd, const int code)
 {
     for (int i = 0 ; codes[i].msg != NULL ; i++) {
-        if (codes[i].msg == code) {
+        if (codes[i].code == code) {
             dprintf(fd, "%d %s\n", code, codes[i].msg);
             break;
         }

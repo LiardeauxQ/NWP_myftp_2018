@@ -5,9 +5,9 @@
 ** RETR command
 */
 
-#include "server.h"
 #include <fcntl.h>
 #include <sys/stat.h>
+#include "server.h"
 
 static char *read_file(const char *filename)
 {
