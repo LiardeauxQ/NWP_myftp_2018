@@ -13,6 +13,8 @@
 #include "commands.h"
 #include "reply_codes.h"
 
+#define MAX_IP_LENGTH 16
+
 /* client_socket_management.c */
 
 void check_sockets_event(fd_set *readfds,
