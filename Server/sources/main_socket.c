@@ -7,20 +7,6 @@
 
 #include "server.h"
 
-static ip_address_t split_ip_address(const struct in_addr *in)
-{
-    char *ip_string = inet_ntoa(*in);
-    char **split_ip = str_to_word_array(ip_string, ".");
-    ip_address_t ip_address = {0};
-
-    ip_address.octet_1 = atoi(split_ip[0]);
-    ip_address.octet_2 = atoi(split_ip[1]);
-    ip_address.octet_3 = atoi(split_ip[2]);
-    ip_address.octet_4 = atoi(split_ip[3]);
-    free_2d_char_array(split_ip);
-    return (ip_address);
-}
-
 void check_main_socket_event(fd_set *readfds,
         client_sks_t (*clients)[MAX_CLIENT], const int main_socket)
 {

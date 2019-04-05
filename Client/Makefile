@@ -5,19 +5,19 @@
 ## Makefile
 ##
 
-LIBUTILSDIR	=	../lib/utils/
+LIB_UTILS_DIR	=	../library/utils
 
-INC	=	-I $(LIBUTILSDIR) -I ../inc -I ./inc/ 
+INC	=	-I $(LIB_UTILS_DIR)/includes -I ../includes 
 
-SRCDIR	= ./src/
+SRC_DIR	= ./sources/
 
 SRCS	=	main.c
 
 CFLAGS	=	-Wall -Wextra -g $(INC)
 
-LDFLAGS	=	-lutils -L $(LIBUTILSDIR)
+LDFLAGS	=	-lutils -L $(LIB_UTILS_DIR)
 
-PREFIX_SRCS	= $(addprefix $(SRCDIR), $(SRCS))
+PREFIX_SRCS	= $(addprefix $(SRC_DIR), $(SRCS))
 
 OBJS		=	$(PREFIX_SRCS:.c=.o)
 
@@ -26,7 +26,7 @@ NAME		=	client
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	@make --no-print-directory -C $(LIBUTILSDIR)
+	@make --no-print-directory -C $(LIB_UTILS_DIR)
 	@printf 'FLAGS: $(LDFLAGS) $(CFLAGS)\n'
 	@printf 'Create: ./$(NAME)\n'
 	@$(CC) -o $(NAME) $^ $(CFLAGS) $(LDFLAGS)
@@ -36,12 +36,12 @@ $(NAME):	$(OBJS)
 	@$(CC) -o $@ -c $< $(LDFLAGS) $(CFLAGS)
 
 clean:
-	@make clean --no-print-directory -C $(LIBUTILSDIR)
+	@make clean --no-print-directory -C $(LIB_UTILS_DIR)
 	@rm -f $(OBJS)
 	@printf 'Clean : OK\n'
 
 fclean: clean
-	@make fclean --no-print-directory -C $(LIBUTILSDIR)
+	@make fclean --no-print-directory -C $(LIB_UTILS_DIR)
 	@rm -f $(NAME)
 	@printf 'Fclean: ./$(NAME)\n'
 
