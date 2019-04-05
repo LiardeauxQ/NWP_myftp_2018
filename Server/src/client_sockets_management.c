@@ -39,7 +39,7 @@ void handle_client_command(char *client_cmd,
         }
     }
     if (!found)
-        send_client_message(client->control, 665);
+        send_client_message(client->control, 500);
     free_2d_char_array(split_cmd);
 }
 
