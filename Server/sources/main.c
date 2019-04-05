@@ -20,7 +20,6 @@ void server_loop(client_sks_t (*clients)[MAX_CLIENT], server_utils_t *utils)
                 utils->control.socket);
         check_sockets_event(&readfds, clients, utils);
     }
-    //close(data_socket);
 }
 
 int main(int ac, char **av)

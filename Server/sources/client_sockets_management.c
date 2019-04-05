@@ -27,8 +27,6 @@ void handle_client_command(char *client_cmd,
 
     if (split_cmd == NULL)
         return;
-    printf("%s\n", client_cmd);
-    fflush(stdout);
     for (int i = 0 ; cmd[i].name != NULL ; i++) {
         if (!strcmp(split_cmd[0], cmd[i].name)) {
             if (cmd[i].action != NULL) {
