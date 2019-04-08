@@ -9,12 +9,7 @@
 
 static void disconnect_client(const int client_socket)
 {
-    struct sockaddr_in skaddr;
-    socklen_t addrlen = sizeof(struct sockaddr_in);
-
-    getpeername(client_socket, (struct sockaddr*)&skaddr, &addrlen);
-    printf("Host disconnected, %s:%d\n",
-            inet_ntoa(skaddr.sin_addr), ntohs(skaddr.sin_port));
+    printf("Close connection\n");
     close(client_socket);
 }
 
@@ -56,7 +51,7 @@ void check_sockets_event(fd_set *readfds,
             disconnect_client(fd);
             (*clients)[i] = (client_sks_t){0, 0, 0};
         } else
-            handle_client_command(buffer, utils, clients[i]);
+            handle_client_command(buffer, utils, &((*clients)[i]));
         free(buffer);
     }
 }

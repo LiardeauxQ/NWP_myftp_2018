@@ -22,13 +22,10 @@ void server_loop(client_sks_t (*clients)[MAX_CLIENT], server_utils_t *utils)
     }
 }
 
-int main(int ac, char **av)
+static server_utils_t init_server_utils(char **av)
 {
     server_utils_t utils = {0};
-    client_sks_t clients[MAX_CLIENT] = {0};
 
-    if (ac != 3)
-        return (84);
     utils.control = init_master_socket(atoi(av[1]));
     utils.data = init_data_socket();
     utils.home = create_new_dir(getenv("PWD"), av[2]);
@@ -41,6 +38,17 @@ int main(int ac, char **av)
         handle_error("listen");
     if (listen(utils.data.socket, MAX_CLIENT) == -1)
         handle_error("listen");
+    return (utils);
+}
+
+int main(int ac, char **av)
+{
+    server_utils_t utils = {0};
+    client_sks_t clients[MAX_CLIENT] = {0};
+
+    if (ac != 3)
+        return (84);
+    utils = init_server_utils(av);
     server_loop(&clients, &utils);
     close_server_connection(&utils);
     return (0);
