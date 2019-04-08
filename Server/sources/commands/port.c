@@ -19,26 +19,59 @@ static char *reform_ip_address(char **data)
     return (string_ip);
 }
 
+static struct sockaddr_in init_sockaddr_in(const int sin_family,
+        const int sin_port, const int s_addr)
+{
+    struct sockaddr_in sockaddr = {0};
+
+    sockaddr.sin_family = sin_family;
+    sockaddr.sin_port = sin_port;
+    sockaddr.sin_addr.s_addr = s_addr;
+    return (sockaddr);
+}
+
+static int handle_connection_to_client(char *param)
+{
+    char **params = str_to_word_array(param, " \t(),");
+    struct sockaddr_in sockaddr = {0};
+    int data_socket = 0;
+    int opt = 1;
+
+    if (params == NULL)
+        return (-1);
+    if (count_2d_array(params) != 7 ||
+            (data_socket = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+        free_2d_char_array(params);
+        return (-1);
+    }
+    setsockopt(data_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    sockaddr = init_sockaddr_in(AF_INET, htons(atoi(params[5]) * 256
+            + atoi(params[6])), inet_addr(reform_ip_address(params + 1)));
+    if (connect(data_socket, (struct sockaddr*)&sockaddr,
+            sizeof(struct sockaddr_in)) == -1)
+        data_socket = -2;
+    free_2d_char_array(params);
+    return (data_socket);
+}
+
 void port_action(server_utils_t *utils, char *param,
         client_sks_t *client)
 {
-    char **split_cmd = str_to_word_array(param, " \t(),");
-    struct sockaddr_in sockaddr = {0};
-
-    if (count_2d_array(split_cmd) != 7) {
-        send_client_message(client->control, 501);
+    if (!client->is_connect) {
+        send_client_code(client->control, 530);
         return;
     }
-    client->data = socket(AF_INET, SOCK_STREAM, 0);
-    sockaddr.sin_family = AF_INET;
-    sockaddr.sin_port = htons(atoi(split_cmd[5]) * 256 + atoi(split_cmd[6]));
-    sockaddr.sin_addr.s_addr = inet_addr(reform_ip_address(split_cmd + 1));
-    if (connect(client->data, (struct sockaddr *) &sockaddr,
-            sizeof(struct sockaddr_in)) == -1) {
-        client->data = 0;
-        send_client_message(client->control, 666);
+    client->data = handle_connection_to_client(param);
+    switch (client->data) {
+    case -1:
+        send_client_code(client->control, 501);
+        break;
+    case -2:
+        send_client_code(client->control, 530);
+        break;
+    default:
+        send_client_code(client->control, 200);
         return;
     }
-    send_client_message(client->control, 200);
-    free_2d_char_array(split_cmd);
+    client->data = 0;
 }

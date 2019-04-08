@@ -22,7 +22,7 @@ void check_main_socket_event(fd_set *readfds,
         handle_error("accept");
     printf("Connection from %s:%d\n", inet_ntoa(acceptaddr.sin_addr),
             ntohs(acceptaddr.sin_port));
-    send_client_message(new_socket, 220);
+    send_client_code(new_socket, 220);
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         if ((*clients)[i].control == 0) {
             (*clients)[i].control = new_socket;

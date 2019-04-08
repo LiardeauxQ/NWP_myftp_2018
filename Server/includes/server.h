@@ -29,7 +29,8 @@ void successful_data_socket_connection(const sockinfo_t *data, const int fd);
 
 /* client_msg.c */
 
-void send_client_message(const int fd, const int code);
+void send_client_code(const int fd, const int code);
+void send_client_message(const int fd, const char *msg, const int code);
 
 /* close_connection.c */
 

@@ -26,29 +26,37 @@ static char *read_file(const char *filename)
     return (buffer);
 }
 
-void retr_action(server_utils_t *utils, char *param,
-        client_sks_t *client)
+static int handle_retr_command(const char *param, int control_sk, int data_sk)
 {
-    int pid = 0;
-    char *buffer = 0;
     char **split_cmd = str_to_word_array(param, " \t");
-    
-    if (count_2d_array(split_cmd) != 2) {
-        send_client_message(client->control, 666);
-        return;
-    }
+    char *buffer = 0;
+
+    if (count_2d_array(split_cmd) != 2)
+        return (-1);
     buffer = read_file(split_cmd[1]);
-    if (buffer == NULL) {
-        send_client_message(client->control, 666);
-        return;
-    }
-    send_client_message(client->control, 150); 
-    if ((pid = fork()) == 0) {
-        write(client->data, buffer, strlen(buffer));
+    if (buffer == NULL)
+        return (-1);
+    send_client_code(control_sk, 150); 
+    if (fork() == 0) {
+        write(data_sk, buffer, strlen(buffer));
         free(buffer);
         free_2d_char_array(split_cmd);
         exit(0);
     }
-    close(client->data);
-    send_client_message(client->control, 226);
+    close(data_sk);
+    return (0);
+}
+
+void retr_action(server_utils_t *utils, char *param,
+        client_sks_t *client)
+{
+    if (!client->is_connect) {
+        send_client_code(client->control, 530);
+        return;
+    }
+    if (handle_retr_command(param, client->control, client->data)) {
+        send_client_code(client->control, 666);
+        return;
+    }
+    send_client_code(client->control, 226);
 }

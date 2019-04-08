@@ -45,13 +45,13 @@ static int file_line(char buffer[], char *stock_line, int *j)
 {
     int i = 0;
 
-    while (buffer[i] != '\0' && buffer[i] != '\n') {
+    while (buffer[i] != '\0' && (buffer[i] < '\a' || buffer[i] > '\r')) {
         stock_line[*j] = buffer[i];
         i = i + 1;
         *j = *j + 1;
     }
     stock_line[*j] = '\0';
-    if (buffer[i] == '\n') {
+    if (buffer[i] >= '\a' && buffer[i] <= '\r') {
         i = i + 1;
         set_new_buffer(buffer, i);
         return (1);
