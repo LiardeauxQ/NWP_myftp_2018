@@ -27,7 +27,7 @@
 #define DEFAULT_PORT 1024
 
 #define handle_error(msg) \
-	do { perror(msg); exit(EXIT_ERROR); } while (0)
+        do { perror(msg); exit(EXIT_ERROR); } while (0)
 
 typedef struct socket_info_s {
     int socket;

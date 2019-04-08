@@ -18,8 +18,7 @@
 /* client_socket_management.c */
 
 void check_sockets_event(fd_set *readfds,
-		         client_sks_t (*clients)[MAX_CLIENT],
-			 server_utils_t *utils);
+    client_sks_t (*clients)[MAX_CLIENT], server_utils_t *utils);
 
 /* data_socket.h */
 
