@@ -5,8 +5,8 @@
 ## Makefile
 ##
 
-CLIENT_DIR	=	Client/
-SERVER_DIR	=	Server/
+CLIENT_DIR	=	FTPClient/
+SERVER_DIR	=	FTPServer/
 
 CLIENT_NAME	=	client
 SERVER_NAME	=	myftp
@@ -14,10 +14,10 @@ SERVER_NAME	=	myftp
 all:
 	@printf "Starting client compilation:\n"
 	@make --no-print-directory -C $(CLIENT_DIR)
-	@mv $(CLIENT_DIR)/$(CLIENT_NAME) .
+	@mv $(CLIENT_DIR)$(CLIENT_NAME) .
 	@printf "\nStarting server compilation:\n"
 	@make --no-print-directory -C $(SERVER_DIR)
-	@mv $(SERVER_DIR)/$(SERVER_NAME) .
+	@mv $(SERVER_DIR)$(SERVER_NAME) .
 
 clean:
 	@make clean --no-print-directory -C $(CLIENT_DIR)
