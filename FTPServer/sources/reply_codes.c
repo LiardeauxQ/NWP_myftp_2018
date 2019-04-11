@@ -19,6 +19,7 @@ const struct reply_code_s codes[] =
     {"Service closing control connection.", 221},
     {"Closing data connection.", 226},
     {"Login successful.", 230},
+    {"Requested file action okay, completed.", 250},
     {"User name okay, need password.", 331},
     {"Need account for login.", 332},
     {"Can't open data connection.", 425},
