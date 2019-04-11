@@ -34,7 +34,26 @@ void handle_client_command(char *client_cmd,
     if (!found)
         send_client_code(client->control, 500);
     free_2d_char_array(split_cmd);
-    lseek(client->control, 0, SEEK_END);
+}
+
+static void read_control_socket(server_utils_t *utils, client_sks_t *client)
+{
+    int i = 0;
+    char *buffer = NULL;
+    size_t size = 0;
+    FILE *stream = fdopen(client->control, "r");
+
+    while (getline(&buffer, &size, stream) != -1) {
+        handle_client_command(buffer, utils, client);
+        free(buffer);
+        size = 0;
+        i = i + 1;
+    }
+    if (i == 0) {
+        disconnect_client(client->control);
+        *client = (client_sks_t){0, 0, 0};
+    }
+    fclose(stream);
 }
 
 void check_sockets_event(fd_set *readfds,
@@ -42,17 +61,11 @@ void check_sockets_event(fd_set *readfds,
         server_utils_t *utils)
 {
     int fd = 0;
-    char *buffer = NULL;
 
     for (int i = 0 ; i < MAX_CLIENT ; i++) {
         fd = (*clients)[i].control;
         if (!FD_ISSET(fd, readfds))
             continue;
-        if ((buffer = get_next_line(fd)) == NULL) {
-            disconnect_client(fd);
-            (*clients)[i] = (client_sks_t){0, 0, 0};
-        } else
-            handle_client_command(buffer, utils, &((*clients)[i]));
-        free(buffer);
+        read_control_socket(utils, &((*clients)[i]));
     }
 }
