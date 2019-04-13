@@ -12,12 +12,14 @@ char *create_new_dir(const char *home, const char *str)
     char *new_dir = NULL;
     size_t size = 0;
 
-    if (home == NULL || str == NULL)
+    if (str == NULL)
         return (NULL);
     if (str[0] == '/')
         return (strdup(str));
+    if (home == NULL)
+	return (NULL);
     size = strlen(home);
-    new_dir = calloc(1, (strlen(str) + size + 2) * sizeof(char));
+    new_dir = calloc(strlen(str) + size + 2, sizeof(char));
     strcat(new_dir, home);
     if (new_dir[size - 1] != 47) {
         new_dir[size] = 47;

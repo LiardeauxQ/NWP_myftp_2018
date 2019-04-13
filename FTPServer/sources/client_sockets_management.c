@@ -31,9 +31,7 @@ int handle_client_command(char *client_cmd,
     if (split_cmd == NULL)
         return (0);
     for (int i = 0 ; cmd[i].name != NULL && quit == 0 ; i++) {
-	    printf("%s %s\n", split_cmd[0], cmd[i].name);
         if (!strcmp(split_cmd[0], cmd[i].name)) {
-	    printf("%s %s\n", split_cmd[0], cmd[i].name);
             if (cmd[i].action != NULL) {
                 cmd[i].action(utils, client_cmd, client);
                 found = 1;

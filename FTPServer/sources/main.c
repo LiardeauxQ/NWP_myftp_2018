@@ -28,7 +28,7 @@ static server_utils_t init_server_utils(char **av)
 
     utils.control = init_master_socket(atoi(av[1]));
     utils.data = init_data_socket();
-    utils.home = create_new_dir(getenv("PWD"), av[2]);
+    utils.home = strdup(av[2]);
     utils.pwd = strdup(utils.home);
     if (chdir(utils.pwd))
         handle_error("chdir");
