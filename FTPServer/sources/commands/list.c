@@ -13,7 +13,7 @@ void list_action(server_utils_t *utils, char *param,
     int pid = 0;
     char **split_cmd = NULL;
 
-    if (!client->is_connect) {
+    if (client->is_connect != 2) {
         send_client_code(client->control, 530);
         return;
     }

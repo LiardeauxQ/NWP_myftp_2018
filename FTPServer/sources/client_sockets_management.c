@@ -13,27 +13,39 @@ static void disconnect_client(const int client_socket)
     close(client_socket);
 }
 
-void handle_client_command(char *client_cmd,
+static int check_special_case(char**split_cmd)
+{
+    if (!strcmp(split_cmd[0], "QUIT"))
+        return (1);
+    return (0);
+}
+
+int handle_client_command(char *client_cmd,
         server_utils_t *utils,
         client_sks_t *client)
 {
     char **split_cmd = str_to_word_array(clean_str(client_cmd), " \t");
     int found = 0;
+    int quit = 0;
 
     if (split_cmd == NULL)
-        return;
-    for (int i = 0 ; cmd[i].name != NULL ; i++) {
+        return (0);
+    for (int i = 0 ; cmd[i].name != NULL && quit == 0 ; i++) {
+	    printf("%s %s\n", split_cmd[0], cmd[i].name);
         if (!strcmp(split_cmd[0], cmd[i].name)) {
+	    printf("%s %s\n", split_cmd[0], cmd[i].name);
             if (cmd[i].action != NULL) {
                 cmd[i].action(utils, client_cmd, client);
                 found = 1;
             }
+	    quit = check_special_case(split_cmd);
             break;
         }
     }
-    if (!found)
+    if (!found && quit == 0)
         send_client_code(client->control, 500);
     free_2d_char_array(split_cmd);
+    return (quit);
 }
 
 static void read_control_socket(server_utils_t *utils, client_sks_t *client)
@@ -44,7 +56,10 @@ static void read_control_socket(server_utils_t *utils, client_sks_t *client)
     FILE *stream = fdopen(client->control, "r");
 
     while (getline(&buffer, &size, stream) != -1) {
-        handle_client_command(buffer, utils, client);
+        if (handle_client_command(buffer, utils, client)) {
+	    free(buffer);
+	    break;
+	}
         free(buffer);
         size = 0;
         i = i + 1;

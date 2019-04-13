@@ -15,7 +15,7 @@ void pasv_action(server_utils_t *utils, char __attribute__((unused)) *param,
     ip_address_t *ip = &utils->control.ip;
     int p[2] = {0};
 
-    if (!client->is_connect) {
+    if (client->is_connect != 2) {
         send_client_code(client->control, 530);
         return;
     }

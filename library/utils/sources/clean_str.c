@@ -9,7 +9,9 @@
 
 char *clean_str(char *str)
 {
-    for (int i = 0 ; str[i] != 0 && (str[i] <= 32 || str[i] >= 127) ; i++)
+    char *tmp = str;
+
+    for (int i = 0 ; tmp[i] != 0 && (tmp[i] <= 32 || tmp[i] >= 127) ; i++)
         str = str + 1;
     for (int i = strlen(str) - 1 ;
             i >= 0 && (str[i] <= 32 || str[i] >= 127) ; i--)

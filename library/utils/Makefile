@@ -21,7 +21,7 @@ OBJ	=	$(PREFIX_SRCS:.c=.o)
 
 NAME	=	libutils.a
 
-CFLAGS	=	-W -I ./includes
+CFLAGS	=	-g -W -I ./includes
 
 $(NAME):	$(OBJ)
 	@echo -e 'Flags: $(CFLAGS)'
