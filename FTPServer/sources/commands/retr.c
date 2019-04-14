@@ -16,7 +16,7 @@ static char *read_file(const char *filename)
     struct stat file_info = {0};
 
     if (stat(filename, &file_info))
-        handle_error("stat");
+        return (NULL);
     fd = open(filename, O_RDONLY);
     if (fd == -1)
         return (NULL);
@@ -55,7 +55,7 @@ void retr_action(server_utils_t *utils, char *param,
         return;
     }
     if (handle_retr_command(param, client->control, client->data)) {
-        send_client_code(client->control, 666);
+        send_client_message(client->control, "Failed to open file.", 550);
         return;
     }
     send_client_code(client->control, 226);

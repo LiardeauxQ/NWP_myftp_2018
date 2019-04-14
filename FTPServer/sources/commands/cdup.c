@@ -15,7 +15,7 @@ void cdup_action(server_utils_t *utils, char __attribute__((unused)) *param,
         return;
     }
     if (chdir(utils->home)) {
-        send_client_code(client->control, 666);
+        send_client_code(client->control, 550);
         return;
     }
     free(utils->pwd);
