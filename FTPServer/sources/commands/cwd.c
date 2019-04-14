@@ -52,10 +52,10 @@ void cwd_action(server_utils_t *utils, char *param,
         return;
     }
     if (handle_cwd_command(param, utils->pwd)) {
-        send_client_code(client->control, 501);
+        send_client_code(client->control, 550);
         return;
     }
     free(utils->pwd);
     utils->pwd = getcwd(NULL, 0);
-    send_client_code(client->control, 200);
+    send_client_code(client->control, 250);
 }

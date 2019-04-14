@@ -28,6 +28,7 @@ const struct reply_code_s codes[] =
     {"Command not implemented.", 502},
     {"Not logged in.", 530},
     {"Need account for storing files.", 532},
+    {"Failed to change directory.", 550},
     {"Error", 666},
     {NULL, 0}
 };
