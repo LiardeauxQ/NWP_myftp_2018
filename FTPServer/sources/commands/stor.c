@@ -20,11 +20,11 @@ static char *read_data_socket(const int fd)
     while ((line = get_next_line(fd)) != NULL) {
         size += strlen(line) + 2;
         buffer = realloc(buffer, size * sizeof(char));
-	if (buffer == NULL)
-            return (NULL);
-	strcat(buffer, line);
-	buffer[strlen(buffer) - 1] = '\n';
-	buffer[strlen(buffer)] = '\0';
+        if (buffer == NULL)
+                return (NULL);
+        strcat(buffer, line);
+        buffer[strlen(buffer) - 1] = '\n';
+        buffer[strlen(buffer)] = '\0';
         free(line);
     }
     return (buffer);
@@ -43,11 +43,11 @@ static int handle_stor_command(const char *param, int control_sk, int data_sk)
         return (-1);
     send_client_code(control_sk, 150);
     if (fork() == 0) {
-	buffer = read_data_socket(data_sk);
-	if (buffer == NULL)
-            exit(0);
-	write(fd, buffer, strlen(buffer));
-	free(buffer);
+        buffer = read_data_socket(data_sk);
+        if (buffer == NULL)
+                exit(0);
+        write(fd, buffer, strlen(buffer));
+        free(buffer);
         exit(0);
     }
     close(fd);

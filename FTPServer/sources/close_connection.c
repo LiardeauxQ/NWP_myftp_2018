@@ -16,10 +16,10 @@ void close_server_connection(server_utils_t *utils)
 
 void free_client(client_sks_t *client)
 {
-	client->is_connect = 0;
-	client->control = 0;
-	client->data = 0;
-	client->pid = 0;
-	free(client->username);
-	client->username = NULL;
+    client->is_connect = 0;
+    client->control = 0;
+    client->data = 0;
+    client->pid = 0;
+    free(client->username);
+    client->username = NULL;
 }

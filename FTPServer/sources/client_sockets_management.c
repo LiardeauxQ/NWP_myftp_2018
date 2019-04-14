@@ -35,7 +35,7 @@ int handle_client_command(char *client_cmd,
                 cmd[i].action(utils, client_cmd, client);
                 found = 1;
             }
-	    quit = check_special_case(split_cmd);
+       quit = check_special_case(split_cmd);
             break;
         }
     }
@@ -52,15 +52,15 @@ static void read_control_socket(server_utils_t *utils, client_sks_t *client)
 
     while ((buffer = get_next_line(client->control)) != NULL) {
         if (handle_client_command(buffer, utils, client)) {
-	    free(buffer);
-	    break;
-	}
+        free(buffer);
+        break;
+    }
         free(buffer);
         i = i + 1;
     }
     if (i == 0) {
         disconnect_client(client->control);
-	free_client(client);
+    free_client(client);
     }
 }
 

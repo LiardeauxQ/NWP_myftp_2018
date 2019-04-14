@@ -17,7 +17,7 @@ char *create_new_dir(const char *home, const char *str)
     if (str[0] == '/')
         return (strdup(str));
     if (home == NULL)
-	return (NULL);
+        return (NULL);
     size = strlen(home);
     new_dir = calloc(strlen(str) + size + 2, sizeof(char));
     strcat(new_dir, home);

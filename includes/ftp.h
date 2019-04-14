@@ -6,7 +6,7 @@
 */
 
 #ifndef FTP_H_
-#	define FTP_H_
+#    define FTP_H_
 
 #include <sys/socket.h>
 #include <sys/types.h>

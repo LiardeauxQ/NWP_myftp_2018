@@ -6,7 +6,7 @@
 */
 
 #ifndef SERVER_UTILS_H_
-#	define SERVER_UTILS_H_
+#    define SERVER_UTILS_H_
 
 typedef struct server_utils_s {
     char *home;

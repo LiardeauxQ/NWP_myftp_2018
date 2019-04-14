@@ -6,7 +6,7 @@
 */
 
 #ifndef REPLY_CODES_H_
-#	define REPLY_CODES_H_
+#    define REPLY_CODES_H_
 
 struct reply_code_s {
     char *msg;
