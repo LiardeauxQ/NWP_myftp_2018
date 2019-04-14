@@ -28,9 +28,8 @@ int handle_client_command(char *client_cmd,
     int found = 0;
     int quit = 0;
 
-    if (split_cmd == NULL)
-        return (0);
-    for (int i = 0 ; cmd[i].name != NULL && quit == 0 ; i++) {
+    for (int i = 0 ; split_cmd != NULL && cmd[i].name != NULL
+            && quit == 0 ; i++) {
         if (!strcmp(split_cmd[0], cmd[i].name)) {
             if (cmd[i].action != NULL) {
                 cmd[i].action(utils, client_cmd, client);
@@ -40,7 +39,7 @@ int handle_client_command(char *client_cmd,
             break;
         }
     }
-    if (!found && quit == 0)
+    if (!found && !quit && strlen(client_cmd) > 0)
         send_client_code(client->control, 500);
     free_2d_char_array(split_cmd);
     return (quit);
@@ -50,23 +49,19 @@ static void read_control_socket(server_utils_t *utils, client_sks_t *client)
 {
     int i = 0;
     char *buffer = NULL;
-    size_t size = 0;
-    FILE *stream = fdopen(client->control, "r");
 
-    while (getline(&buffer, &size, stream) != -1) {
+    while ((buffer = get_next_line(client->control)) != NULL) {
         if (handle_client_command(buffer, utils, client)) {
 	    free(buffer);
 	    break;
 	}
         free(buffer);
-        size = 0;
         i = i + 1;
     }
     if (i == 0) {
         disconnect_client(client->control);
-        *client = (client_sks_t){0, 0, 0};
+	free_client(client);
     }
-    fclose(stream);
 }
 
 void check_sockets_event(fd_set *readfds,

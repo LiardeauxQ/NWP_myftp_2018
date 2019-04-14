@@ -34,5 +34,6 @@ void send_client_message(const int fd, const char *msg, const int code);
 /* close_connection.c */
 
 void close_server_connection(server_utils_t *utils);
+void free_client(client_sks_t *client);
 
 #endif /* SERVER_H_ */

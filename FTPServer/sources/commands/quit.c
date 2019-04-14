@@ -12,5 +12,5 @@ void quit_action(server_utils_t *utils, char *param,
 {
     send_client_code(client->control, 221);
     close(client->control);
-    *client = (client_sks_t){0, 0, 0};
+    free_client(client);
 }

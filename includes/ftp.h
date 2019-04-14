@@ -41,6 +41,7 @@ typedef struct client_sockets_s {
     int control;
     int data;
     int pid;
+    char *username;
 } client_sks_t;
 
 /* main_socket.c */
