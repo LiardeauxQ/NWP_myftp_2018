@@ -52,15 +52,15 @@ static void read_control_socket(server_utils_t *utils, client_sks_t *client)
 
     while ((buffer = get_next_line(client->control)) != NULL) {
         if (handle_client_command(buffer, utils, client)) {
-        free(buffer);
-        break;
-    }
+            free(buffer);
+            break;
+        }
         free(buffer);
         i = i + 1;
     }
     if (i == 0) {
         disconnect_client(client->control);
-    free_client(client);
+        free_client(client);
     }
 }
 
