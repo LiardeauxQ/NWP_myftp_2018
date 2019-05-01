@@ -35,7 +35,7 @@ int handle_client_command(char *client_cmd,
                 cmd[i].action(utils, client_cmd, client);
                 found = 1;
             }
-       quit = check_special_case(split_cmd);
+            quit = check_special_case(split_cmd);
             break;
         }
     }

@@ -15,13 +15,16 @@ static char *read_file(const char *filename)
     char *buffer = NULL;
     struct stat file_info = {0};
 
-    if (stat(filename, &file_info))
+    if (stat(filename, &file_info) == -1)
         return (NULL);
     fd = open(filename, O_RDONLY);
     if (fd == -1)
         return (NULL);
     buffer = malloc(sizeof(char) * file_info.st_size);
-    read(fd, buffer, file_info.st_size);
+    if (buffer == NULL)
+        return (NULL);
+    if (read(fd, buffer, file_info.st_size) == -1)
+        return (NULL);
     close(fd);
     return (buffer);
 }

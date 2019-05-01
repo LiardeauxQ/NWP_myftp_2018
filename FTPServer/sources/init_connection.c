@@ -13,7 +13,7 @@ static void bind_socket(sockinfo_t *info, const int port)
     info->sockaddr.sin_port = htons(port);
     info->sockaddr.sin_addr.s_addr = htons(INADDR_ANY);
     if (bind(info->socket, (struct sockaddr *) &info->sockaddr,
-             sizeof(struct sockaddr_in)) == -1) {
+            sizeof(struct sockaddr_in)) == -1) {
         info->socket = -1;
         return;
     }
