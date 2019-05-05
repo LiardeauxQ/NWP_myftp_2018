@@ -9,11 +9,13 @@
 
 static void bind_socket(sockinfo_t *info, const int port)
 {
+    size_t struct_size = sizeof(struct sockaddr_in);
+    struct sockaddr * sockaddr = (struct sockaddr *)&info->sockaddr;
+
     info->sockaddr.sin_family = AF_INET;
     info->sockaddr.sin_port = htons(port);
     info->sockaddr.sin_addr.s_addr = htons(INADDR_ANY);
-    if (bind(info->socket, (struct sockaddr *) &info->sockaddr,
-            sizeof(struct sockaddr_in)) == -1) {
+    if (bind(info->socket, sockaddr, struct_size) == -1) {
         info->socket = -1;
         return;
     }
@@ -29,8 +31,7 @@ sockinfo_t init_master_socket(const int port)
     info.socket = socket(AF_INET, SOCK_STREAM, 0);
     if (info.socket == -1)
         return (info);
-    setsockopt(info.socket, SOL_SOCKET, SO_REUSEADDR,
-            &option, sizeof(option));
+    setsockopt(info.socket, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(int));
     bind_socket(&info, port);
     info.port = port;
     info.ip = get_ip_address();

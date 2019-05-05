@@ -26,23 +26,22 @@ int handle_client_command(char *client_cmd,
 {
     char **split_cmd = str_to_word_array(clean_str(client_cmd), " \t");
     int found = 0;
-    int quit = 0;
+    int q = 0;
 
-    for (int i = 0 ; split_cmd != NULL && cmd[i].name != NULL
-            && quit == 0 ; i++) {
+    for (int i = 0 ; split_cmd != 0x0 && cmd[i].name != 0x0 && q == 0 ; i++) {
         if (!strcmp(split_cmd[0], cmd[i].name)) {
             if (cmd[i].action != NULL) {
                 cmd[i].action(utils, client_cmd, client);
                 found = 1;
             }
-            quit = check_special_case(split_cmd);
+            q = check_special_case(split_cmd);
             break;
         }
     }
-    if (!found && !quit && strlen(client_cmd) > 0)
+    if (!found && !q && strlen(client_cmd) > 0)
         send_client_code(client->control, 500);
     free_2d_char_array(split_cmd);
-    return (quit);
+    return (q);
 }
 
 static void read_control_socket(server_utils_t *utils, client_sks_t *client)
